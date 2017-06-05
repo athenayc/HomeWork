@@ -8,7 +8,7 @@ $pdo=new pdo($dsn,$user,$passwd,$opt);
 
 if (isset($_GET['delid'])){
     $delid = $_GET['delid'];
-    $sql = "DELETE FROM cust WHERE id={$delid}";
+    $sql = "DELETE FROM customer WHERE id={$delid}";
 //    $db->query($sql);
     $stmt=$pdo->prepare($sql);
     $stmt->execute($delid);
@@ -16,11 +16,12 @@ if (isset($_GET['delid'])){
 } ;
 
 
-$sql = 'select * from cust';
-echo "$sql";
+$sql = 'select * from customer';
+
 $stmt=$pdo->prepare($sql);
-$stmt->execute([$id,$account,$passwd,$realname]);
+$stmt->execute();
 //$rs = $db->query($sql);
+echo $stmt->rowCount();
 ?>
 
 <a href="addmemberpdo.php">New</a>
@@ -35,12 +36,12 @@ $stmt->execute([$id,$account,$passwd,$realname]);
         <th>Edit</th>
     </tr>
     <?php
-    while ($row = $stmt->fetch_object()){
+    while ($row = $stmt->fetchObject()){
         echo '<tr>';
         echo "<td>{$row->id}</td>";
-        echo "<td>{$row->account}</td>";
-        echo "<td>{$row->passwd}</td>";
-        echo "<td>{$row->realname}</td>";
+        echo "<td>{$row->Account}</td>";
+        echo "<td>{$row->Passwd}</td>";
+        echo "<td>{$row->Realname}</td>";
         echo "<td><a href='?delid={$row->id}'>Del</td>";
         echo "<td><a href='editMember.php?editid={$row->id}'>Edit</td>";
         echo '</tr>';
